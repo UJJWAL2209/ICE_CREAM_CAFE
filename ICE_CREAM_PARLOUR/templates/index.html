@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Ice Cream Parlor</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='/style.css') }}">
+    </head>
+    <body>
+    <div class="container">
+
+        <h1>Ice Cream Parlor</h1> 
+
+        <h1>Welcome to Ice Cream Parlor Cafe</h1>
+        
+        <h2>Allergens</h2>
+        <ul>
+            {% for allergen in allergens %}
+                <li>{{ allergen.name }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Ingredients</h2>
+        <ul>
+            {% for ingredient in ingredients %}
+                <li>{{ ingredient.name }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Flavors</h2>
+        <ul>
+            {% for flavor in flavors %}
+                <li>{{ flavor.name }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Product Types</h2>
+        <ul>
+            {% for product_type in product_types %}
+                <li>{{ product_type.name }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>Suggest New Allergen or Flavor</h2>
+        <form method="POST" action="/suggestions">
+            <input type="text" name="customer_name" placeholder="Your Name" required>
+            <input type="text" name="flavor_suggestion" placeholder="New Flavor or Allergen" required>
+            <button type="submit">Submit Suggestion</button>
+        </form>
+
+        <h2>Add to Cart</h2>
+        <form method="POST" action="/cart">
+            <select name="flavor_id">
+                {% for flavor in flavors %}
+                <option value="{{ flavor.id }}">{{ flavor.name }}</option>
+                {% endfor %}
+            </select>
+            <select name="product_type_id">
+                {% for product_type in product_types %}
+                <option value="{{ product_type.id }}">{{ product_type.name }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit">Add to Cart</button>
+        </form>
+
+        <h2>Cart</h2>
+        <ul>
+            {% for item in cart %}
+                <li>{{ item.flavor.name }} - {{ item.product_type.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
